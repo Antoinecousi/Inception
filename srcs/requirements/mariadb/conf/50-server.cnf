@@ -1,5 +1,6 @@
 [mysql]
 default-character-set=utf8
+# fqfq
 
 [mysqld]
 datadir = /var/lib/mysql

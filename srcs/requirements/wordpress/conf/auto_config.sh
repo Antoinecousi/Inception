@@ -1,6 +1,5 @@
 #!bin/bash
 sleep 2
-echo -e "YOYOYO!"
 if [ ! -e /var/www/wordpress/wp-config.php ]; then
     wp config create	--allow-root \
                         --dbname=$SQL_DATABASE \
@@ -9,28 +8,22 @@ if [ ! -e /var/www/wordpress/wp-config.php ]; then
                         --dbhost=mariadb:3306 \
                         --path='/var/www/wordpress'
 
-sleep 2
-echo -e "im here"
-
 wp core install     --url=acousini.42.fr \
                     --title=acousini \
-                    --admin_user=Nimda \
-                    --admin_password=NimdaPass \
-                    --admin_email=Nimda@unknown.com \
+                    --admin_user=$CORE_USER \
+                    --admin_password=$CORE_USER_PW \
+                    --admin_email=$CORE_USER_EMAIL \
                     --allow-root \
                     --path='/var/www/wordpress'
 
-echo -e "im here"
 
 wp user create      --role=author gpetit gpetit@example.com \
-                    --user_pass=gpetit42 \
+                    --user_pass=$OTHER_USER_PW \
                     --allow-root \
                     --path='/var/www/wordpress' >> /log.txt
 fi
 
 if [ ! -d /run/php ]; then
     mkdir ./run/php
-    echo -e "mkdir ./run/php"
 fi
-echo -e "/usr/sbin/php-fpm7.3 -F"
 /usr/sbin/php-fpm7.3 -F
